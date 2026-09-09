@@ -23,40 +23,16 @@ from travel_concierge.shared_libraries import constants
 from travel_concierge.sub_agents.in_trip import prompt
 
 
-def flight_status_check(
-    flight_number: str, flight_date: str, checkin_time: str, departure_time: str
-):
-    """Checks the status of a flight, given its flight_number, date, checkin_time and departure_time."""
-    print("Checking", flight_number, flight_date, checkin_time, departure_time)
-    return {"status": f"Flight {flight_number} checked"}
-
-
-def event_booking_check(event_name: str, event_date: str, event_location: str):
-    """Checks the status of an event that requires booking, given its event_name, date, and event_location."""
-    print("Checking", event_name, event_date, event_location)
-    if event_name.startswith(
-        "Space Needle"
-    ):  # Mocking an exception to illustrate
-        return {"status": f"{event_name} is closed."}
-    return {"status": f"{event_name} checked"}
-
-
-def weather_impact_check(
-    activity_name: str, activity_date: str, activity_location: str
-):
-    """
-    Checks the status of an outdoor activity that may be impacted by weather, given its name, date, and its location.
-
-    Args:
-        activity_name: The name of the activity.
-        activity_date: The date of the activity.
-        activity_location: The location of the activity.
-
-    Returns:
-        A dictionary containing the status of the activity.
-    """
-    print("Checking", activity_name, activity_date, activity_location)
-    return {"status": f"{activity_name} checked"}
+# The sample mocked these three checks inline (including a hardcoded
+# "Space Needle is closed" exception). In the port they are real proxied
+# world tools — the closure is a fact in the simulated world's ledger, not
+# a string in the code. Re-exported here so the in_trip agent wiring keeps
+# its original import site.
+from travel_concierge.world import (  # noqa: F401
+    event_booking_check,
+    flight_status_check,
+    weather_impact_check,
+)
 
 
 def get_event_time_as_destination(

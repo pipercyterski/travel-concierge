@@ -12,17 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Travel concierge — Dystopic benchmark port.
+
+The upstream sample resolves Google Cloud credentials at import time and runs
+on Vertex/Gemini. The port routes all model calls through LiteLLM so the model
+is an environment choice (a harness-variant knob on the platform side), with
+no cloud project needed to import the package.
+"""
+
 import os
 
-import google.auth
+MODEL_NAME = os.getenv("CONCIERGE_MODEL", "openai/gpt-4.1")
 
-_, project_id = google.auth.default()
-os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id)
-os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
-os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
+from google.adk.models.lite_llm import LiteLlm  # noqa: E402
 
-MODEL = os.getenv("GOOGLE_GENAI_MODEL")
-if not MODEL:
-    MODEL = "gemini-2.5-flash"
+MODEL = LiteLlm(model=MODEL_NAME)
 
-from . import agent  # noqa: E402
+from . import agent  # noqa: E402,F401

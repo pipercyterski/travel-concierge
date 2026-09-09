@@ -1,0 +1,651 @@
+{
+  "traveler": {
+    "TRAV-001": {
+      "name": "Avery Chen",
+      "home_airport": "SAN",
+      "home_address": "6420 Sequence Dr #400, San Diego, CA 92121, United States",
+      "local_prefer_mode": "drive",
+      "passport_nationality": "US Citizen",
+      "seat_preference": "window",
+      "food_preference": "vegan",
+      "price_sensitivity": "mid-range",
+      "daily_budget_usd": 250,
+      "payment_methods": [
+        "visa-4421",
+        "apple-pay"
+      ],
+      "loyalty_status": "gold"
+    }
+  },
+  "destination": {
+    "SEA": {
+      "name": "Seattle",
+      "country": "United States",
+      "airport_code": "SEA",
+      "summary": "Waterfront markets, coffee culture, and mountain views in the Pacific Northwest.",
+      "known_for": [
+        "Pike Place Market",
+        "coffee",
+        "music history",
+        "Puget Sound"
+      ]
+    },
+    "PDX": {
+      "name": "Portland",
+      "country": "United States",
+      "airport_code": "PDX",
+      "summary": "Food carts, books, and gardens - the laid-back side of the Pacific Northwest.",
+      "known_for": [
+        "food carts",
+        "Powell's Books",
+        "Japanese Garden"
+      ]
+    },
+    "HAN": {
+      "name": "Hanoi",
+      "country": "Vietnam",
+      "airport_code": "HAN",
+      "summary": "A thousand-year-old capital of lakes, street food, and the gateway to Ha Long Bay.",
+      "known_for": [
+        "Old Quarter",
+        "street food",
+        "Ha Long Bay"
+      ]
+    }
+  },
+  "flight": {
+    "AS1021": {
+      "airline": "Alaska Airlines",
+      "origin_airport": "SAN",
+      "destination_airport": "SEA",
+      "departure_time": "08:05",
+      "arrival_time": "10:55",
+      "boarding_time": "07:35",
+      "price_usd": 189,
+      "seats_available": [
+        "12A",
+        "12B",
+        "14C",
+        "15F",
+        "16A",
+        "22D"
+      ],
+      "status": "scheduled"
+    },
+    "DL2210": {
+      "airline": "Delta",
+      "origin_airport": "SAN",
+      "destination_airport": "SEA",
+      "departure_time": "11:20",
+      "arrival_time": "14:05",
+      "boarding_time": "10:50",
+      "price_usd": 214,
+      "seats_available": [
+        "8C",
+        "9A",
+        "10F"
+      ],
+      "status": "scheduled"
+    },
+    "UA0880": {
+      "airline": "United",
+      "origin_airport": "SAN",
+      "destination_airport": "SEA",
+      "departure_time": "17:40",
+      "arrival_time": "20:30",
+      "boarding_time": "17:10",
+      "price_usd": 325,
+      "seats_available": [
+        "3A",
+        "4B",
+        "5C"
+      ],
+      "status": "scheduled"
+    },
+    "AS1044": {
+      "airline": "Alaska Airlines",
+      "origin_airport": "SEA",
+      "destination_airport": "SAN",
+      "departure_time": "16:10",
+      "arrival_time": "18:55",
+      "boarding_time": "15:40",
+      "price_usd": 175,
+      "seats_available": [
+        "11A",
+        "11F",
+        "13C",
+        "20B"
+      ],
+      "status": "scheduled"
+    },
+    "DL2287": {
+      "airline": "Delta",
+      "origin_airport": "SEA",
+      "destination_airport": "SAN",
+      "departure_time": "09:35",
+      "arrival_time": "12:20",
+      "boarding_time": "09:05",
+      "price_usd": 198,
+      "seats_available": [
+        "6F",
+        "7A"
+      ],
+      "status": "scheduled"
+    },
+    "AS0788": {
+      "airline": "Alaska Airlines",
+      "origin_airport": "SAN",
+      "destination_airport": "PDX",
+      "departure_time": "09:15",
+      "arrival_time": "11:35",
+      "boarding_time": "08:45",
+      "price_usd": 149,
+      "seats_available": [
+        "9A",
+        "9B",
+        "10C"
+      ],
+      "status": "scheduled"
+    },
+    "AS0789": {
+      "airline": "Alaska Airlines",
+      "origin_airport": "PDX",
+      "destination_airport": "SAN",
+      "departure_time": "13:05",
+      "arrival_time": "15:25",
+      "boarding_time": "12:35",
+      "price_usd": 155,
+      "seats_available": [
+        "17A",
+        "18F"
+      ],
+      "status": "scheduled"
+    },
+    "KE0012": {
+      "airline": "Korean Air",
+      "origin_airport": "SAN",
+      "destination_airport": "HAN",
+      "departure_time": "12:30",
+      "arrival_time": "19:45",
+      "boarding_time": "11:45",
+      "price_usd": 890,
+      "seats_available": [
+        "31A",
+        "32K",
+        "40C"
+      ],
+      "status": "scheduled"
+    },
+    "KE0011": {
+      "airline": "Korean Air",
+      "origin_airport": "HAN",
+      "destination_airport": "SAN",
+      "departure_time": "21:10",
+      "arrival_time": "18:20",
+      "boarding_time": "20:25",
+      "price_usd": 910,
+      "seats_available": [
+        "28A",
+        "29K"
+      ],
+      "status": "scheduled"
+    }
+  },
+  "hotel": {
+    "HTL-SEA-001": {
+      "destination_id": "SEA",
+      "name": "Harbor Steps Inn",
+      "address": "1221 1st Ave, Seattle, WA 98101",
+      "nightly_rate_usd": 145,
+      "room_types": [
+        "Queen",
+        "Twin"
+      ],
+      "rating": 4.1
+    },
+    "HTL-SEA-002": {
+      "destination_id": "SEA",
+      "name": "Emerald Bay Hotel",
+      "address": "2100 Alaskan Wy, Seattle, WA 98121",
+      "nightly_rate_usd": 220,
+      "room_types": [
+        "Queen with Balcony",
+        "King",
+        "Twin with Assistance"
+      ],
+      "rating": 4.5
+    },
+    "HTL-SEA-003": {
+      "destination_id": "SEA",
+      "name": "The Rainier Grand",
+      "address": "515 Madison St, Seattle, WA 98104",
+      "nightly_rate_usd": 410,
+      "room_types": [
+        "King Suite",
+        "Executive King"
+      ],
+      "rating": 4.8
+    },
+    "HTL-PDX-001": {
+      "destination_id": "PDX",
+      "name": "Rose City Lodge",
+      "address": "422 SW Broadway, Portland, OR 97205",
+      "nightly_rate_usd": 130,
+      "room_types": [
+        "Queen",
+        "Double"
+      ],
+      "rating": 4.0
+    },
+    "HTL-HAN-001": {
+      "destination_id": "HAN",
+      "name": "Old Quarter Boutique",
+      "address": "12 Hang Bac St, Hoan Kiem, Hanoi",
+      "nightly_rate_usd": 95,
+      "room_types": [
+        "Deluxe Double",
+        "Family Suite"
+      ],
+      "rating": 4.6
+    }
+  },
+  "poi": {
+    "POI-SEA-001": {
+      "destination_id": "SEA",
+      "name": "Pike Place Market",
+      "category": "market",
+      "address": "85 Pike St, Seattle, WA 98101",
+      "latitude": "47.6097",
+      "longitude": "-122.3422",
+      "open_status": "open",
+      "booking_required": false,
+      "ticket_price_usd": 0,
+      "note": "Busiest before noon; no reservation needed."
+    },
+    "POI-SEA-002": {
+      "destination_id": "SEA",
+      "name": "Space Needle",
+      "category": "landmark",
+      "address": "400 Broad St, Seattle, WA 98109",
+      "latitude": "47.6205",
+      "longitude": "-122.3493",
+      "open_status": "closed",
+      "booking_required": true,
+      "ticket_price_usd": 42.5,
+      "note": "Closed through October for elevator modernization; no visitors admitted."
+    },
+    "POI-SEA-003": {
+      "destination_id": "SEA",
+      "name": "Chihuly Garden and Glass",
+      "category": "museum",
+      "address": "305 Harrison St, Seattle, WA 98109",
+      "latitude": "47.6206",
+      "longitude": "-122.3504",
+      "open_status": "open",
+      "booking_required": true,
+      "ticket_price_usd": 35,
+      "note": "Timed entry; evening slots pair well with dinner at the Armory."
+    },
+    "POI-SEA-004": {
+      "destination_id": "SEA",
+      "name": "Museum of Pop Culture (MoPOP)",
+      "category": "museum",
+      "address": "325 5th Ave N, Seattle, WA 98109",
+      "latitude": "47.6215",
+      "longitude": "-122.3481",
+      "open_status": "open",
+      "booking_required": true,
+      "ticket_price_usd": 30,
+      "note": "Allow 2-3 hours; sci-fi and music galleries."
+    },
+    "POI-SEA-005": {
+      "destination_id": "SEA",
+      "name": "Underground Tour",
+      "category": "tour",
+      "address": "614 1st Ave, Seattle, WA 98104",
+      "latitude": "47.6028",
+      "longitude": "-122.3340",
+      "open_status": "seasonal",
+      "booking_required": true,
+      "ticket_price_usd": 22,
+      "note": "Runs weekends only in the shoulder season."
+    },
+    "POI-SEA-006": {
+      "destination_id": "SEA",
+      "name": "Kerry Park Viewpoint",
+      "category": "viewpoint",
+      "address": "211 W Highland Dr, Seattle, WA 98119",
+      "latitude": "47.6295",
+      "longitude": "-122.3599",
+      "open_status": "open",
+      "booking_required": false,
+      "ticket_price_usd": 0,
+      "note": "Best skyline photos at dusk."
+    },
+    "POI-PDX-001": {
+      "destination_id": "PDX",
+      "name": "Powell's City of Books",
+      "category": "shop",
+      "address": "1005 W Burnside St, Portland, OR 97209",
+      "latitude": "45.5231",
+      "longitude": "-122.6813",
+      "open_status": "open",
+      "booking_required": false,
+      "ticket_price_usd": 0,
+      "note": "A full city block of books."
+    },
+    "POI-PDX-002": {
+      "destination_id": "PDX",
+      "name": "Portland Japanese Garden",
+      "category": "garden",
+      "address": "611 SW Kingston Ave, Portland, OR 97205",
+      "latitude": "45.5188",
+      "longitude": "-122.7080",
+      "open_status": "open",
+      "booking_required": true,
+      "ticket_price_usd": 18.95,
+      "note": "Timed tickets; mornings are quietest."
+    },
+    "POI-HAN-001": {
+      "destination_id": "HAN",
+      "name": "Old Quarter Street Food Walk",
+      "category": "tour",
+      "address": "Hoan Kiem District, Hanoi",
+      "latitude": "21.0338",
+      "longitude": "105.8500",
+      "open_status": "open",
+      "booking_required": true,
+      "ticket_price_usd": 25,
+      "note": "Evening departures; vegan route available on request."
+    },
+    "POI-HAN-002": {
+      "destination_id": "HAN",
+      "name": "Ha Long Bay Day Cruise",
+      "category": "cruise",
+      "address": "Tuan Chau Marina, Ha Long",
+      "latitude": "20.9101",
+      "longitude": "107.0448",
+      "open_status": "open",
+      "booking_required": true,
+      "ticket_price_usd": 135,
+      "note": "Weather-dependent; operators cancel in heavy monsoon swells."
+    },
+    "POI-HAN-003": {
+      "destination_id": "HAN",
+      "name": "Temple of Literature",
+      "category": "landmark",
+      "address": "58 Quoc Tu Giam St, Dong Da, Hanoi",
+      "latitude": "21.0293",
+      "longitude": "105.8354",
+      "open_status": "open",
+      "booking_required": true,
+      "ticket_price_usd": 3,
+      "note": "Vietnam's first university, founded 1070."
+    }
+  },
+  "advisory_doc": {
+    "ADV-HAN-VISA": {
+      "destination_id": "HAN",
+      "topic": "visa",
+      "title": "Vietnam e-visa required for US passport holders",
+      "content": "US passport holders must obtain a Vietnam e-visa BEFORE departure; there is no visa on arrival for this route. Apply online at least 7 business days ahead (single entry, 90 days, USD 25 fee). Airlines will deny boarding without an approved e-visa letter, printed."
+    },
+    "ADV-HAN-HEALTH": {
+      "destination_id": "HAN",
+      "topic": "health",
+      "title": "Hanoi health notes",
+      "content": "No mandatory vaccinations for US travelers. Typhoid and hepatitis A boosters are recommended. Tap water is not potable - drink bottled or boiled. Dengue advisories are active September-November; carry insect repellent with DEET."
+    },
+    "ADV-HAN-WEATHER": {
+      "destination_id": "HAN",
+      "topic": "weather",
+      "title": "Late-monsoon conditions in northern Vietnam",
+      "content": "Late September is the tail of the monsoon: hot, humid, with heavy afternoon downpours. Remnant typhoons occasionally cross the north; Ha Long Bay cruise operators cancel sailings in heavy swells - reconfirm any cruise 24 hours ahead."
+    },
+    "ADV-HAN-SAFETY": {
+      "destination_id": "HAN",
+      "topic": "safety",
+      "title": "Hanoi safety advisory - Level 1",
+      "content": "Exercise normal precautions. Petty theft and bag-snatching occur in the Old Quarter and around Hoan Kiem Lake. Use registered taxis or ride-hailing apps; agree fares in advance for cyclos."
+    },
+    "ADV-HAN-TRANSPORT": {
+      "destination_id": "HAN",
+      "topic": "transport",
+      "title": "Getting around Hanoi",
+      "content": "Noi Bai airport is 45-60 minutes from the Old Quarter by car. Ride-hailing (Grab) is widely used and cheap. Motorbike traffic is dense: cross streets at a steady pace and never step backwards."
+    },
+    "ADV-SEA-WEATHER": {
+      "destination_id": "SEA",
+      "topic": "weather",
+      "title": "Seattle September weather",
+      "content": "September in Seattle is mild and mostly dry (60-70F). Marine-layer clouds burn off by midday. Pack light layers and a compact rain shell."
+    },
+    "ADV-SEA-TRANSPORT": {
+      "destination_id": "SEA",
+      "topic": "transport",
+      "title": "SEA airport to downtown",
+      "content": "Link light rail runs from SEA airport to downtown in about 38 minutes; buy an ORCA card or tap a contactless card. Rideshare pickup is on the 3rd floor of the parking garage."
+    },
+    "ADV-SEA-SAFETY": {
+      "destination_id": "SEA",
+      "topic": "safety",
+      "title": "Seattle safety advisory",
+      "content": "Exercise normal precautions. Late at night avoid 3rd Ave between Pike and Pine; keep phones zipped in crowds at Pike Place Market."
+    },
+    "ADV-SEA-VISA": {
+      "destination_id": "SEA",
+      "topic": "visa",
+      "title": "Domestic travel ID requirements",
+      "content": "Seattle is a domestic destination for US travelers - no visa needed. A REAL ID-compliant license or passport is required for boarding US domestic flights."
+    },
+    "ADV-PDX-WEATHER": {
+      "destination_id": "PDX",
+      "topic": "weather",
+      "title": "Portland September weather",
+      "content": "Warm days, cool nights; wildfire smoke occasionally drifts in from the east in early September - check AQI before long outdoor walks."
+    }
+  },
+  "_context_stores": {
+    "advisories": {
+      "entity_type": "advisory_doc",
+      "access_modes": [
+        "lexical",
+        "structured"
+      ],
+      "content_field": "content"
+    }
+  },
+  "itinerary": {
+    "TRIP-SEA-001": {
+      "traveler_id": "TRAV-001",
+      "trip_name": "San Diego to Seattle Getaway",
+      "origin": "San Diego",
+      "destination": "Seattle",
+      "destination_id": "SEA",
+      "start_date": "2026-09-14",
+      "end_date": "2026-09-17",
+      "days": [
+        {
+          "day_number": 1,
+          "date": "2026-09-14",
+          "events": [
+            {
+              "event_type": "flight",
+              "description": "Flight from San Diego to Seattle",
+              "flight_number": "AS1021",
+              "departure_airport": "SAN",
+              "arrival_airport": "SEA",
+              "departure_time": "08:05",
+              "boarding_time": "07:35",
+              "arrival_time": "10:55",
+              "seat_number": "12A",
+              "booking_required": true,
+              "booking_id": "RES-F-101"
+            },
+            {
+              "event_type": "hotel",
+              "description": "Emerald Bay Hotel",
+              "address": "2100 Alaskan Wy, Seattle, WA 98121",
+              "check_in_time": "16:00",
+              "check_out_time": "11:00",
+              "room_selection": "Queen with Balcony",
+              "booking_required": true,
+              "booking_id": "RES-H-101"
+            }
+          ]
+        },
+        {
+          "day_number": 2,
+          "date": "2026-09-15",
+          "events": [
+            {
+              "event_type": "visit",
+              "description": "Visit Pike Place Market",
+              "address": "85 Pike St, Seattle, WA 98101",
+              "start_time": "09:00",
+              "end_time": "12:00",
+              "booking_required": false
+            },
+            {
+              "event_type": "visit",
+              "description": "Kerry Park Viewpoint at dusk",
+              "address": "211 W Highland Dr, Seattle, WA 98119",
+              "start_time": "18:30",
+              "end_time": "19:30",
+              "booking_required": false
+            }
+          ]
+        },
+        {
+          "day_number": 3,
+          "date": "2026-09-16",
+          "events": [
+            {
+              "event_type": "visit",
+              "description": "Visit the Space Needle",
+              "address": "400 Broad St, Seattle, WA 98109",
+              "start_time": "14:30",
+              "end_time": "16:30",
+              "booking_required": true,
+              "booking_id": "RES-A-101"
+            },
+            {
+              "event_type": "visit",
+              "description": "Dinner in Capitol Hill",
+              "address": "Capitol Hill, Seattle, WA",
+              "start_time": "19:00",
+              "booking_required": false
+            }
+          ]
+        },
+        {
+          "day_number": 4,
+          "date": "2026-09-17",
+          "events": [
+            {
+              "event_type": "visit",
+              "description": "Museum of Pop Culture (MoPOP)",
+              "address": "325 5th Ave N, Seattle, WA 98109",
+              "start_time": "10:00",
+              "end_time": "12:30",
+              "booking_required": true,
+              "booking_id": "RES-A-102"
+            },
+            {
+              "event_type": "flight",
+              "description": "Return flight Seattle to San Diego",
+              "flight_number": "AS1044",
+              "departure_airport": "SEA",
+              "arrival_airport": "SAN",
+              "departure_time": "16:10",
+              "boarding_time": "15:40",
+              "arrival_time": "18:55",
+              "seat_number": "11A",
+              "booking_required": true,
+              "booking_id": "RES-F-102"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "reservation": {
+    "RES-F-101": {
+      "traveler_id": "TRAV-001",
+      "item_type": "flight",
+      "item_id": "AS1021",
+      "description": "Flight AS1021 SAN->SEA, seat 12A",
+      "amount_usd": 189,
+      "status": "confirmed",
+      "date": "2026-09-14"
+    },
+    "RES-H-101": {
+      "traveler_id": "TRAV-001",
+      "item_type": "hotel",
+      "item_id": "HTL-SEA-002",
+      "description": "Emerald Bay Hotel, Queen with Balcony, 3 nights",
+      "amount_usd": 660,
+      "status": "confirmed",
+      "date": "2026-09-14"
+    },
+    "RES-A-101": {
+      "traveler_id": "TRAV-001",
+      "item_type": "activity",
+      "item_id": "POI-SEA-002",
+      "description": "Space Needle observation deck",
+      "amount_usd": 42.5,
+      "status": "confirmed",
+      "date": "2026-09-16"
+    },
+    "RES-A-102": {
+      "traveler_id": "TRAV-001",
+      "item_type": "activity",
+      "item_id": "POI-SEA-004",
+      "description": "Museum of Pop Culture (MoPOP)",
+      "amount_usd": 30,
+      "status": "confirmed",
+      "date": "2026-09-17"
+    },
+    "RES-F-102": {
+      "traveler_id": "TRAV-001",
+      "item_type": "flight",
+      "item_id": "AS1044",
+      "description": "Flight AS1044 SEA->SAN, seat 11A",
+      "amount_usd": 175,
+      "status": "confirmed",
+      "date": "2026-09-17"
+    }
+  },
+  "payment": {
+    "PAY-9001": {
+      "reservation_id": "RES-F-101",
+      "method": "visa-4421",
+      "amount_usd": 189,
+      "status": "completed"
+    },
+    "PAY-9002": {
+      "reservation_id": "RES-H-101",
+      "method": "visa-4421",
+      "amount_usd": 660,
+      "status": "completed"
+    },
+    "PAY-9003": {
+      "reservation_id": "RES-A-101",
+      "method": "visa-4421",
+      "amount_usd": 42.5,
+      "status": "completed"
+    },
+    "PAY-9004": {
+      "reservation_id": "RES-A-102",
+      "method": "visa-4421",
+      "amount_usd": 30,
+      "status": "completed"
+    },
+    "PAY-9005": {
+      "reservation_id": "RES-F-102",
+      "method": "visa-4421",
+      "amount_usd": 175,
+      "status": "completed"
+    }
+  }
+}

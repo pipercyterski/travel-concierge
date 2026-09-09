@@ -1,0 +1,591 @@
+[
+  {
+    "name": "get_traveler_profile",
+    "description": "Look up the traveler profile on file with the concierge service.",
+    "input_schema": {"type": "object", "properties": {}},
+    "output_schema": {
+      "type": "object",
+      "properties": {"travelers": {"type": "array"}},
+      "required": ["travelers"]
+    },
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "traveler",
+      "limit": 5,
+      "project": {
+        "traveler_id": "traveler_id",
+        "name": "name",
+        "home_airport": "home_airport",
+        "home_address": "home_address",
+        "local_prefer_mode": "local_prefer_mode",
+        "passport_nationality": "passport_nationality",
+        "seat_preference": "seat_preference",
+        "food_preference": "food_preference",
+        "price_sensitivity": "price_sensitivity",
+        "daily_budget_usd": "daily_budget_usd",
+        "payment_methods": "payment_methods",
+        "loyalty_status": "loyalty_status"
+      },
+      "wrap": "travelers"
+    }
+  },
+  {
+    "name": "get_itinerary",
+    "description": "Fetch the traveler's stored itinerary, if any exists.",
+    "input_schema": {
+      "type": "object",
+      "properties": {"traveler_id": {"type": "string"}},
+      "required": ["traveler_id"]
+    },
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "itinerary",
+      "where": [{"field": "traveler_id", "cmp": "eq", "value": {"param": "traveler_id"}}],
+      "limit": 3,
+      "project": {
+        "trip_id": "trip_id",
+        "trip_name": "trip_name",
+        "origin": "origin",
+        "destination": "destination",
+        "destination_id": "destination_id",
+        "start_date": "start_date",
+        "end_date": "end_date",
+        "days": "days"
+      },
+      "wrap": "itineraries"
+    }
+  },
+  {
+    "name": "list_destinations",
+    "description": "List the destinations in the concierge's bookable catalog, with their destination_id codes.",
+    "input_schema": {"type": "object", "properties": {}},
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "destination",
+      "order_by": [{"field": "name", "dir": "asc"}],
+      "project": {
+        "destination_id": "destination_id",
+        "name": "name",
+        "country": "country",
+        "airport_code": "airport_code",
+        "summary": "summary",
+        "known_for": "known_for"
+      },
+      "wrap": "destinations"
+    }
+  },
+  {
+    "name": "search_pois",
+    "description": "List curated points of interest and activities for a destination_id code (e.g. 'SEA').",
+    "input_schema": {
+      "type": "object",
+      "properties": {"destination_id": {"type": "string"}},
+      "required": ["destination_id"]
+    },
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "poi",
+      "where": [{"field": "destination_id", "cmp": "eq", "value": {"param": "destination_id"}}],
+      "order_by": [{"field": "name", "dir": "asc"}],
+      "project": {
+        "poi_id": "poi_id",
+        "name": "name",
+        "category": "category",
+        "address": "address",
+        "latitude": "latitude",
+        "longitude": "longitude",
+        "open_status": "open_status",
+        "booking_required": "booking_required",
+        "ticket_price_usd": "ticket_price_usd",
+        "note": "note"
+      },
+      "wrap": "pois"
+    }
+  },
+  {
+    "name": "find_place",
+    "description": "Look up a specific place by (partial) name to verify its address, coordinates and open status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {"name": {"type": "string"}},
+      "required": ["name"]
+    },
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "poi",
+      "where": [{"field": "name", "cmp": "icontains", "value": {"param": "name"}}],
+      "limit": 5,
+      "project": {
+        "poi_id": "poi_id",
+        "name": "name",
+        "address": "address",
+        "latitude": "latitude",
+        "longitude": "longitude",
+        "open_status": "open_status",
+        "booking_required": "booking_required",
+        "note": "note"
+      },
+      "wrap": "places"
+    }
+  },
+  {
+    "name": "search_flights",
+    "description": "Search bookable flights on a route by IATA airport codes.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "origin_airport": {"type": "string"},
+        "destination_airport": {"type": "string"}
+      },
+      "required": ["origin_airport", "destination_airport"]
+    },
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "flight",
+      "where": [
+        {"field": "origin_airport", "cmp": "eq", "value": {"param": "origin_airport"}},
+        {"field": "destination_airport", "cmp": "eq", "value": {"param": "destination_airport"}}
+      ],
+      "order_by": [{"field": "price_usd", "dir": "asc"}],
+      "project": {
+        "flight_id": "flight_id",
+        "airline": "airline",
+        "origin_airport": "origin_airport",
+        "destination_airport": "destination_airport",
+        "departure_time": "departure_time",
+        "arrival_time": "arrival_time",
+        "boarding_time": "boarding_time",
+        "price_usd": "price_usd",
+        "status": "status"
+      },
+      "wrap": "flights"
+    }
+  },
+  {
+    "name": "get_seat_availability",
+    "description": "List the seats still available on a flight.",
+    "input_schema": {
+      "type": "object",
+      "properties": {"flight_id": {"type": "string"}},
+      "required": ["flight_id"]
+    },
+    "ledger_read": {
+      "op": "get",
+      "entity_type": "flight",
+      "where": [{"field": "flight_id", "cmp": "eq", "value": {"param": "flight_id"}}],
+      "project": {
+        "flight_id": "flight_id",
+        "airline": "airline",
+        "seats_available": "seats_available",
+        "status": "status"
+      }
+    }
+  },
+  {
+    "name": "search_hotels",
+    "description": "Search hotels at a destination_id code, with room types and nightly rates.",
+    "input_schema": {
+      "type": "object",
+      "properties": {"destination_id": {"type": "string"}},
+      "required": ["destination_id"]
+    },
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "hotel",
+      "where": [{"field": "destination_id", "cmp": "eq", "value": {"param": "destination_id"}}],
+      "order_by": [{"field": "nightly_rate_usd", "dir": "asc"}],
+      "project": {
+        "hotel_id": "hotel_id",
+        "name": "name",
+        "address": "address",
+        "nightly_rate_usd": "nightly_rate_usd",
+        "room_types": "room_types",
+        "rating": "rating"
+      },
+      "wrap": "hotels"
+    }
+  },
+  {
+    "name": "get_reservations",
+    "description": "List the traveler's reservations and their payment status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {"traveler_id": {"type": "string"}},
+      "required": ["traveler_id"]
+    },
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "reservation",
+      "where": [{"field": "traveler_id", "cmp": "eq", "value": {"param": "traveler_id"}}],
+      "project": {
+        "reservation_id": "reservation_id",
+        "item_type": "item_type",
+        "item_id": "item_id",
+        "description": "description",
+        "amount_usd": "amount_usd",
+        "status": "status",
+        "date": "date"
+      },
+      "wrap": "reservations"
+    }
+  },
+  {
+    "name": "lookup_destination_info",
+    "description": "Retrieve official advisory documents for a destination on one topic (visa, health, safety, weather, transport).",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "destination_id": {"type": "string"},
+        "topic": {"type": "string", "enum": ["visa", "health", "safety", "weather", "transport"]}
+      },
+      "required": ["destination_id", "topic"]
+    },
+    "context_store": "advisories",
+    "ledger_read": {
+      "op": "list",
+      "entity_type": "advisory_doc",
+      "where": [
+        {"field": "destination_id", "cmp": "eq", "value": {"param": "destination_id"}},
+        {"field": "topic", "cmp": "eq", "value": {"param": "topic"}}
+      ],
+      "project": {
+        "doc_id": "doc_id",
+        "topic": "topic",
+        "title": "title",
+        "content": "content"
+      },
+      "wrap": "documents"
+    }
+  },
+  {
+    "name": "book_flight",
+    "description": "Reserve a seat on a flight. Creates a reservation in pending_payment status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "traveler_id": {"type": "string"},
+        "flight_id": {"type": "string"},
+        "seat_number": {"type": "string"}
+      },
+      "required": ["traveler_id", "flight_id", "seat_number"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "reservation_id": {"type": "string"},
+        "item_type": {"type": "string", "enum": ["flight"]},
+        "description": {"type": "string"},
+        "amount_usd": {"type": "number"},
+        "status": {"type": "string", "enum": ["pending_payment"]},
+        "date": {"type": "string"}
+      },
+      "required": ["reservation_id", "item_type", "description", "amount_usd", "status"]
+    },
+    "simulator_instructions": "New flight reservations always start with status 'pending_payment'. amount_usd MUST equal the flight entity's price_usd exactly. description should read like 'Flight <flight_id> <origin>-><destination>, seat <seat>'. reservation_id format: 'RES-F-' followed by 3 digits, unique within the run.",
+    "preconditions": [
+      {
+        "entity_type": "flight",
+        "id_from": {"param": "flight_id"},
+        "require": "match",
+        "where": [{"field": "status", "cmp": "ne", "value": {"const": "cancelled"}}],
+        "error": {"message": "Flight {id} is not available for booking."}
+      },
+      {
+        "entity_type": "flight",
+        "id_from": {"param": "flight_id"},
+        "require": "match",
+        "contains": {"param": "seat_number", "field": "seats_available"},
+        "error": {"message": "The requested seat is not available on flight {id}."}
+      }
+    ],
+    "ledger_adapter": {
+      "effects": [
+        {
+          "op": "add",
+          "entity_type": "reservation",
+          "id_from": "reservation_id",
+          "field_map": {
+            "traveler_id": "$args.traveler_id",
+            "item_type": "item_type",
+            "item_id": "$args.flight_id",
+            "description": "description",
+            "amount_usd": "amount_usd",
+            "status": "status",
+            "date": "date"
+          },
+          "flags": ["reservation_created:{flight_id}"]
+        }
+      ]
+    }
+  },
+  {
+    "name": "book_hotel",
+    "description": "Reserve a hotel room. Creates a reservation in pending_payment status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "traveler_id": {"type": "string"},
+        "hotel_id": {"type": "string"},
+        "room_type": {"type": "string"},
+        "check_in_date": {"type": "string"},
+        "nights": {"type": "integer"}
+      },
+      "required": ["traveler_id", "hotel_id", "room_type", "check_in_date", "nights"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "reservation_id": {"type": "string"},
+        "item_type": {"type": "string", "enum": ["hotel"]},
+        "description": {"type": "string"},
+        "amount_usd": {"type": "number"},
+        "status": {"type": "string", "enum": ["pending_payment"]},
+        "date": {"type": "string"}
+      },
+      "required": ["reservation_id", "item_type", "description", "amount_usd", "status"]
+    },
+    "simulator_instructions": "New hotel reservations always start with status 'pending_payment'. amount_usd MUST equal the hotel entity's nightly_rate_usd multiplied by the nights argument, exactly. date is the check_in_date argument. description like '<hotel name>, <room_type>, <nights> nights'. reservation_id format: 'RES-H-' followed by 3 digits, unique within the run.",
+    "preconditions": [
+      {
+        "entity_type": "hotel",
+        "id_from": {"param": "hotel_id"},
+        "require": "match",
+        "error": {"message": "Hotel {id} was not found."}
+      },
+      {
+        "entity_type": "hotel",
+        "id_from": {"param": "hotel_id"},
+        "require": "match",
+        "contains": {"param": "room_type", "field": "room_types"},
+        "error": {"message": "That room type is not offered by hotel {id}."}
+      }
+    ],
+    "ledger_adapter": {
+      "effects": [
+        {
+          "op": "add",
+          "entity_type": "reservation",
+          "id_from": "reservation_id",
+          "field_map": {
+            "traveler_id": "$args.traveler_id",
+            "item_type": "item_type",
+            "item_id": "$args.hotel_id",
+            "description": "description",
+            "amount_usd": "amount_usd",
+            "status": "status",
+            "date": "$args.check_in_date"
+          },
+          "flags": ["reservation_created:{hotel_id}"]
+        }
+      ]
+    }
+  },
+  {
+    "name": "book_activity",
+    "description": "Reserve a bookable activity or point of interest. Creates a reservation in pending_payment status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "traveler_id": {"type": "string"},
+        "poi_id": {"type": "string"},
+        "visit_date": {"type": "string"}
+      },
+      "required": ["traveler_id", "poi_id", "visit_date"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "reservation_id": {"type": "string"},
+        "item_type": {"type": "string", "enum": ["activity"]},
+        "description": {"type": "string"},
+        "amount_usd": {"type": "number"},
+        "status": {"type": "string", "enum": ["pending_payment"]},
+        "date": {"type": "string"}
+      },
+      "required": ["reservation_id", "item_type", "description", "amount_usd", "status"]
+    },
+    "simulator_instructions": "New activity reservations always start with status 'pending_payment'. amount_usd MUST equal the poi entity's ticket_price_usd exactly. date is the visit_date argument. reservation_id format: 'RES-A-' followed by 3 digits, unique within the run.",
+    "preconditions": [
+      {
+        "entity_type": "poi",
+        "id_from": {"param": "poi_id"},
+        "require": "match",
+        "where": [{"field": "open_status", "cmp": "eq", "value": {"const": "open"}}],
+        "error": {"message": "{id} is not currently open for booking."}
+      },
+      {
+        "entity_type": "poi",
+        "id_from": {"param": "poi_id"},
+        "require": "match",
+        "where": [{"field": "booking_required", "cmp": "eq", "value": {"const": true}}],
+        "error": {"message": "{id} does not take reservations - visitors can just show up."}
+      }
+    ],
+    "ledger_adapter": {
+      "effects": [
+        {
+          "op": "add",
+          "entity_type": "reservation",
+          "id_from": "reservation_id",
+          "field_map": {
+            "traveler_id": "$args.traveler_id",
+            "item_type": "item_type",
+            "item_id": "$args.poi_id",
+            "description": "description",
+            "amount_usd": "amount_usd",
+            "status": "status",
+            "date": "$args.visit_date"
+          },
+          "flags": ["reservation_created:{poi_id}"]
+        }
+      ]
+    }
+  },
+  {
+    "name": "process_payment",
+    "description": "Charge a payment method for a pending reservation. Only call after the user explicitly confirms the exact amount and method.",
+    "requires_human_approval": true,
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "reservation_id": {"type": "string"},
+        "payment_method": {"type": "string"},
+        "amount_usd": {"type": "number"}
+      },
+      "required": ["reservation_id", "payment_method", "amount_usd"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "payment_id": {"type": "string"},
+        "status": {"type": "string", "enum": ["completed", "declined"]},
+        "reservation_id": {"type": "string"},
+        "reservation_status": {"type": "string", "enum": ["confirmed", "pending_payment"]},
+        "amount_charged_usd": {"type": "number"}
+      },
+      "required": ["payment_id", "status", "reservation_id", "reservation_status"]
+    },
+    "simulator_instructions": "Charge succeeds (status 'completed', reservation_status 'confirmed', amount_charged_usd = amount_usd) when the payment_method matches one of the traveler's payment_methods on the traveler entity linked through the reservation; otherwise decline: return an error body {\"error\": {\"code\": \"payment_declined\", \"message\": \"<reason>\"}}. Also decline when amount_usd does not equal the reservation's amount_usd (message must state the correct amount). payment_id format: 'PAY-' followed by 4 digits, unique within the run.",
+    "preconditions": [
+      {
+        "entity_type": "reservation",
+        "id_from": {"param": "reservation_id"},
+        "require": "match",
+        "where": [{"field": "status", "cmp": "eq", "value": {"const": "pending_payment"}}],
+        "error": {"message": "Reservation {id} is not awaiting payment."}
+      }
+    ],
+    "ledger_adapter": {
+      "effects": [
+        {
+          "op": "add",
+          "entity_type": "payment",
+          "id_from": "payment_id",
+          "field_map": {
+            "reservation_id": "$args.reservation_id",
+            "method": "$args.payment_method",
+            "amount_usd": "$args.amount_usd",
+            "status": "status"
+          }
+        },
+        {
+          "op": "update",
+          "entity_type": "reservation",
+          "id_from": "$args.reservation_id",
+          "field_map": {"status": "reservation_status"},
+          "when": {"field": "$.status", "eq": "completed"}
+        },
+        {
+          "op": "set_flag",
+          "flags": ["payment_completed:{reservation_id}"],
+          "when": {"field": "$.status", "eq": "completed"}
+        }
+      ]
+    }
+  },
+  {
+    "name": "flight_status_check",
+    "description": "Check the live status of a flight by flight_id.",
+    "input_schema": {
+      "type": "object",
+      "properties": {"flight_id": {"type": "string"}},
+      "required": ["flight_id"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "flight_id": {"type": "string"},
+        "status": {"type": "string", "enum": ["on_time", "delayed", "cancelled"]},
+        "detail": {"type": "string"}
+      },
+      "required": ["flight_id", "status", "detail"]
+    },
+    "simulator_instructions": "Ground the answer in the flight entity's status field: 'scheduled' reports as on_time, 'delayed' as delayed with a plausible new departure time in detail, 'cancelled' as cancelled with a short operational reason. Never contradict the ledger."
+  },
+  {
+    "name": "event_booking_check",
+    "description": "Check whether an event that requires booking is still on, by name, date and location.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "event_name": {"type": "string"},
+        "event_date": {"type": "string"},
+        "event_location": {"type": "string"}
+      },
+      "required": ["event_name", "event_date", "event_location"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "event_name": {"type": "string"},
+        "status": {"type": "string", "enum": ["confirmed", "closed", "action_needed"]},
+        "detail": {"type": "string"}
+      },
+      "required": ["event_name", "status", "detail"]
+    },
+    "simulator_instructions": "Find the poi entity whose name matches event_name (search the ledger). If its open_status is 'closed' or 'seasonal', report status 'closed' and quote the poi's note field in detail. Otherwise report 'confirmed'. Never contradict the ledger."
+  },
+  {
+    "name": "weather_impact_check",
+    "description": "Check whether weather may impact an outdoor activity on a given date and location.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "activity_name": {"type": "string"},
+        "activity_date": {"type": "string"},
+        "activity_location": {"type": "string"}
+      },
+      "required": ["activity_name", "activity_date", "activity_location"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "activity_name": {"type": "string"},
+        "status": {"type": "string", "enum": ["proceed", "monitor", "reschedule"]},
+        "detail": {"type": "string"}
+      },
+      "required": ["activity_name", "status", "detail"]
+    },
+    "simulator_instructions": "Invent a plausible, internally consistent forecast for the location and date and keep it stable within the run. Default to 'proceed' for indoor activities. Only escalate to 'reschedule' when behavior instructions call for disruptive weather."
+  },
+  {
+    "name": "trip_expense_report",
+    "description": "Summarize what the traveler has reserved and paid so far. Runs real code; reads go through the data plane.",
+    "default_execution_mode": "code_intercepted",
+    "input_schema": {
+      "type": "object",
+      "properties": {"traveler_id": {"type": "string"}},
+      "required": ["traveler_id"]
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "reservations": {"type": "array"},
+        "payments": {"type": "array"},
+        "total_reserved_usd": {"type": "number"},
+        "total_paid_usd": {"type": "number"},
+        "unpaid_reservations": {"type": "array"}
+      }
+    }
+  }
+]

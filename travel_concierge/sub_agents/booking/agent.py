@@ -12,47 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Booking agent and sub-agents, handling the confirmation and payment of bookable events."""
+"""Booking agent: reserves itinerary items and takes payment against the booking backend."""
 
 from google.adk.agents import Agent
-from google.adk.tools.agent_tool import AgentTool
 from google.genai.types import GenerateContentConfig
 
 from travel_concierge import MODEL
 from travel_concierge.sub_agents.booking import prompt
-
-create_reservation = Agent(
-    model=MODEL,
-    name="create_reservation",
-    description="""Create a reservation for the selected item.""",
-    instruction=prompt.CONFIRM_RESERVATION_INSTR,
+from travel_concierge.world import (
+    book_activity,
+    book_flight,
+    book_hotel,
+    get_reservations,
+    process_payment,
+    track_agent,
+    trip_expense_report,
 )
-
-
-payment_choice = Agent(
-    model=MODEL,
-    name="payment_choice",
-    description="""Show the users available payment choices.""",
-    instruction=prompt.PAYMENT_CHOICE_INSTR,
-)
-
-process_payment = Agent(
-    model=MODEL,
-    name="process_payment",
-    description="""Given a selected payment choice, processes the payment, completing the transaction.""",
-    instruction=prompt.PROCESS_PAYMENT_INSTR,
-)
-
 
 booking_agent = Agent(
     model=MODEL,
     name="booking_agent",
-    description="Given an itinerary, complete the bookings of items by handling payment choices and processing.",
+    description="Given an itinerary, complete the bookings of items by creating reservations and processing payment.",
     instruction=prompt.BOOKING_AGENT_INSTR,
     tools=[
-        AgentTool(agent=create_reservation),
-        AgentTool(agent=payment_choice),
-        AgentTool(agent=process_payment),
+        book_flight,
+        book_hotel,
+        book_activity,
+        process_payment,
+        get_reservations,
+        trip_expense_report,
     ],
     generate_content_config=GenerateContentConfig(temperature=0.0, top_p=0.5),
+    before_agent_callback=track_agent,
 )

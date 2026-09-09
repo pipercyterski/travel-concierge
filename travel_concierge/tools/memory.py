@@ -65,6 +65,17 @@ def memorize(key: str, value: str, tool_context: ToolContext):
     """
     mem_dict = tool_context.state
     mem_dict[key] = value
+    if key == constants.ITIN_KEY:
+        # Port instrumentation: an itinerary write is the conversation's key
+        # state transition — mirror it to the platform's telemetry lane so the
+        # trace shows what the session decided (never graded, display only).
+        try:
+            from dystopic.odyssey.telemetry import safe_emit_state_snapshot
+
+            snapshot = value if isinstance(value, dict) else {"itinerary": str(value)[:2000]}
+            safe_emit_state_snapshot(snapshot, label="itinerary-memorized")
+        except Exception:  # noqa: BLE001 — telemetry must never break memorize
+            pass
     return {"status": f'Stored "{key}": "{value}"'}
 
 
@@ -119,9 +130,14 @@ def _load_precreated_itinerary(callback_context: CallbackContext):
     Args:
         callback_context: The callback context.
     """
-    data = {}
-    with open(SAMPLE_SCENARIO_PATH) as file:
-        data = json.load(file)
-        print(f"\nLoading Initial State: {data}\n")
+    data = {"state": {}}
+    try:
+        with open(SAMPLE_SCENARIO_PATH) as file:
+            data = json.load(file)
+            print(f"\nLoading Initial State: {data}\n")
+    except (OSError, ValueError):
+        # No scenario file in this runtime (e.g. platform sandbox) — boot with
+        # an empty state; world hydration is responsible for the real profile.
+        pass
 
-    _set_initial_states(data["state"], callback_context.state)
+    _set_initial_states(data.get("state", {}), callback_context.state)

@@ -35,13 +35,18 @@ Otherwise, follow the rest of the instruction.
 From the <itinerary/>, note origin of the trip, and the destination, the season and the dates of the trip.
 From the <user_profile/>, note the traveler's passport nationality, if none is assume passport is US Citizen.
 
-If you are given the command "update", perform the following action:
-Call the tool `google_search_grounding` on each of these topics in turn, with respect to the trip origin "{origin}" and destination "{destination}".
+If you are given the command "update", or asked what to know before the trip, perform the following action:
+Call the tool `lookup_destination_info(destination_id, topic)` — the destination_id code for this trip is
+"{destination_id}" — once for each of these topics in turn:
 It is not necessary to provide summary or comments after each tool, simply call the next one until done;
-- visa_requirements,
-- medical_requirements,
-- storm_monitor,
-- travel_advisory,
+- visa,
+- health,
+- safety,
+- weather,
+- transport,
+
+Base what you report ONLY on the advisory documents the tool returns — do not answer advisory questions
+from memory. If a topic returns no documents, say there is no advisory on file for it.
 
 After that, call the `what_to_pack` tool.
 

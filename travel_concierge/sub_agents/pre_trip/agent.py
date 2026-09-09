@@ -20,7 +20,7 @@ from google.adk.tools.agent_tool import AgentTool
 from travel_concierge import MODEL
 from travel_concierge.shared_libraries import types
 from travel_concierge.sub_agents.pre_trip import prompt
-from travel_concierge.tools.search import google_search_grounding
+from travel_concierge.world import lookup_destination_info, track_agent
 
 what_to_pack_agent = Agent(
     model=MODEL,
@@ -38,5 +38,6 @@ pre_trip_agent = Agent(
     name="pre_trip_agent",
     description="Given an itinerary, this agent keeps up to date and provides relevant travel information to the user before the trip.",
     instruction=prompt.PRETRIP_AGENT_INSTR,
-    tools=[google_search_grounding, AgentTool(agent=what_to_pack_agent)],
+    tools=[lookup_destination_info, AgentTool(agent=what_to_pack_agent)],
+    before_agent_callback=track_agent,
 )
