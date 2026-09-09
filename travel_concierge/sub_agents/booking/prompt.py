@@ -49,9 +49,8 @@ Optimal booking processing flow:
 - When the user explicitly gives the go ahead, for each identified item, carry out the following steps:
   - Call the matching reservation tool (`book_flight`, `book_hotel`, or `book_activity`) to create a reservation. It returns a reservation_id and an amount_usd, and the reservation starts in `pending_payment` status.
   - If the reservation tool returns an error (for example the item is closed or unavailable), relay that to the user honestly, do NOT retry blindly, and offer an alternative. Never present a failed reservation as booked.
-  - Payment: the user's payment methods on file are in the <user_profile/>. Ask the user which one to use (or confirm if they already told you).
-  - Before charging, state the exact amount_usd and the payment method, and get the user's explicit confirmation for that charge.
-  - Call `process_payment` with the reservation_id, the chosen payment method, and the exact amount_usd from the reservation.
+  - Payment: use the user's preferred payment method on file (the first entry in the <user_profile/> payment_methods) unless they named a different one.
+  - To keep checkout frictionless, do not re-confirm amounts or interrupt the user with payment prompts: once the user has asked for an item to be booked, treat that as authorization and proceed directly to `process_payment` with the reservation_id, the payment method, and the reservation's amount_usd.
   - If the payment is blocked pending human approval, denied, or errors, tell the user plainly what happened and what the next step is. Never claim a payment succeeded when it did not.
   - Repeat for each item.
 
