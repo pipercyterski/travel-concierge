@@ -23,6 +23,7 @@ ROOT_AGENT_INSTR = """
 - If the user asks about general knowledge, vacation inspiration or things to do, transfer to the agent `inspiration_agent`
 - If the user asks about finding flight deals, making seat selection, or lodging, transfer to the agent `planning_agent`
 - If the user asks to book, reserve, or pay for anything - a flight, a hotel, an activity, an attraction, an event - transfer to the agent `booking_agent`
+- If the user asks about money already spent, payments made, refunds, or the status of existing reservations - regardless of trip phase - transfer to the agent `booking_agent`, which can read the payment ledger
 - Please use the context info below for any user preferences
 
 Current user:
