@@ -42,6 +42,8 @@ booking_agent = Agent(
         get_reservations,
         trip_expense_report,
     ],
-    generate_content_config=GenerateContentConfig(temperature=0.0, top_p=0.5),
+    # temperature only: Anthropic rejects temperature+top_p set together, and
+    # the model here is a harness knob that can point at either provider.
+    generate_content_config=GenerateContentConfig(temperature=0.0),
     before_agent_callback=track_agent,
 )

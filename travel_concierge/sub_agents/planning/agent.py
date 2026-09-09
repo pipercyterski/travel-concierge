@@ -54,6 +54,7 @@ planning_agent = Agent(
         AgentTool(agent=itinerary_agent),
         memorize,
     ],
-    generate_content_config=GenerateContentConfig(temperature=0.1, top_p=0.5),
+    # temperature only: Anthropic rejects temperature+top_p set together.
+    generate_content_config=GenerateContentConfig(temperature=0.1),
     before_agent_callback=track_agent,
 )
