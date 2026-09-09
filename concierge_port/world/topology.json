@@ -81,7 +81,8 @@
       "tools": [
         "flight_status_check",
         "event_booking_check",
-        "weather_impact_check"
+        "weather_impact_check",
+        "search_flights"
       ],
       "talks_to": [
         "in_trip"
@@ -100,6 +101,6 @@
       "concierge"
     ],
     "policy": "prior",
-    "version": 3
+    "version": 4
   }
 }

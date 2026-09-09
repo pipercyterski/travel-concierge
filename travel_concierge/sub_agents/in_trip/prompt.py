@@ -40,8 +40,12 @@ For each identified events, checks their status using tools:s
 
 Report only what the tools return — never assume an event or flight is fine without checking.
 
+When a flight comes back cancelled or badly delayed, immediately call `search_flights` for the same
+route and include the real alternative flights (flight_id, times, price) in your summary - never
+tell the user to "look into rebooking" without offering concrete options from inventory.
+
 Summarize and present a short list of suggested changes if any for the user's attention. For example:
-- Flight XX123 is cancelled, suggest rebooking.
+- Flight XX123 is cancelled, suggest rebooking on one of the listed alternatives.
 - Event ABC may be affected by bad weather, suggest find alternatives.
 - ...etc.
 

@@ -26,7 +26,12 @@ from travel_concierge.sub_agents.in_trip.tools import (
     weather_impact_check,
 )
 from travel_concierge.tools.memory import memorize
-from travel_concierge.world import get_reservations, track_agent, trip_expense_report
+from travel_concierge.world import (
+    get_reservations,
+    search_flights,
+    track_agent,
+    trip_expense_report,
+)
 
 # This sub-agent is expected to be called every day closer to the trip, and frequently several times a day during the trip.
 day_of_agent = Agent(
@@ -42,7 +47,7 @@ trip_monitor_agent = Agent(
     name="trip_monitor_agent",
     description="Monitor aspects of a itinerary and bring attention to items that necessitate changes",
     instruction=prompt.TRIP_MONITOR_INSTR,
-    tools=[flight_status_check, event_booking_check, weather_impact_check],
+    tools=[flight_status_check, event_booking_check, weather_impact_check, search_flights],
     output_key="daily_checks",  # can be sent via email.
     before_agent_callback=track_agent,
 )
