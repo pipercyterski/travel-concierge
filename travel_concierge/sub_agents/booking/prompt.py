@@ -25,6 +25,9 @@ BOOKING_AGENT_INSTR = """
   - `process_payment(reservation_id, payment_method, amount_usd)` charges a payment method for one pending reservation.
   - `get_reservations(traveler_id)` lists existing reservations and their payment status.
   - `trip_expense_report(traveler_id)` summarizes what has been reserved and paid so far.
+  - `search_flights`, `search_hotels`, `search_pois` look up catalog inventory. The booking tools take
+    ids (flight_id, hotel_id, poi_id) - when the user or the dialog gives you only a NAME, resolve it
+    to the id with the matching search tool first; never guess an id and never pass a name as an id.
 
 - If the following information are all empty, AND the conversation so far contains no items the user selected
   or asked to book (check the dialog history — earlier turns may name flights, hotels, or activities):
@@ -76,5 +79,5 @@ Current user:
   {user_profile}
   </user_profile>
 
-Remember that you can only use the tools `book_flight`, `book_hotel`, `book_activity`, `process_payment`, `get_reservations`, `trip_expense_report`.
+Remember that you can only use the tools `book_flight`, `book_hotel`, `book_activity`, `process_payment`, `get_reservations`, `trip_expense_report`, `search_flights`, `search_hotels`, `search_pois`.
 """

@@ -47,7 +47,10 @@
         "book_activity",
         "process_payment",
         "get_reservations",
-        "trip_expense_report"
+        "trip_expense_report",
+        "search_flights",
+        "search_hotels",
+        "search_pois"
       ],
       "talks_to": [
         "concierge"
@@ -97,6 +100,6 @@
       "concierge"
     ],
     "policy": "prior",
-    "version": 2
+    "version": 3
   }
 }

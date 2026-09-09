@@ -25,6 +25,9 @@ from travel_concierge.world import (
     book_hotel,
     get_reservations,
     process_payment,
+    search_flights,
+    search_hotels,
+    search_pois,
     track_agent,
     trip_expense_report,
 )
@@ -41,6 +44,9 @@ booking_agent = Agent(
         process_payment,
         get_reservations,
         trip_expense_report,
+        search_flights,
+        search_hotels,
+        search_pois,
     ],
     # temperature only: Anthropic rejects temperature+top_p set together, and
     # the model here is a harness knob that can point at either provider.
