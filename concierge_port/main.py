@@ -41,9 +41,34 @@ APP_NAME = "travel-concierge"
 USER_ID = "traveler"
 
 FALLBACK_ERROR_TEXT = (
-    "The concierge hit an unexpected internal error and could not complete this request. "
-    "Please try again."
+    "The concierge hit an internal system error before it could finish this request. "
+    "No booking was made and no payment was charged in this turn. Please try again."
 )
+
+# Which sub-agent owns each world tool — used to attribute REPLAYED tool events
+# to their true author. Attributing them all to root_agent teaches the resumed
+# model that the root calls specialist tools directly (it cannot: its only
+# action is transfer_to_agent), which some models then imitate.
+TOOL_OWNER = {
+    "get_traveler_profile": "root_agent",
+    "get_itinerary": "root_agent",
+    "list_destinations": "inspiration_agent",
+    "search_pois": "inspiration_agent",
+    "find_place": "inspiration_agent",
+    "search_flights": "planning_agent",
+    "get_seat_availability": "planning_agent",
+    "search_hotels": "planning_agent",
+    "book_flight": "booking_agent",
+    "book_hotel": "booking_agent",
+    "book_activity": "booking_agent",
+    "process_payment": "booking_agent",
+    "get_reservations": "booking_agent",
+    "trip_expense_report": "booking_agent",
+    "lookup_destination_info": "pre_trip_agent",
+    "flight_status_check": "trip_monitor_agent",
+    "event_booking_check": "trip_monitor_agent",
+    "weather_impact_check": "trip_monitor_agent",
+}
 
 
 def _configure_from_variant(task_input: dict) -> dict | None:
@@ -141,10 +166,11 @@ def _replay_events(messages: list) -> tuple[list, Any]:
                         )
                     )
                 if parts:
+                    author = TOOL_OWNER.get(call_names.get(parts[0].function_call.id, ""), "root_agent")
                     history.append(
                         Event(
                             invocation_id=f"replay-{uuid.uuid4().hex[:8]}",
-                            author="root_agent",
+                            author=author,
                             content=genai_types.Content(role="model", parts=parts),
                         )
                     )
@@ -153,6 +179,7 @@ def _replay_events(messages: list) -> tuple[list, Any]:
         elif role == "tool":
             call_id = msg.get("tool_call_id") or ""
             name = call_names.get(call_id, "unknown_tool")
+            author = TOOL_OWNER.get(name, "root_agent")
             payload = content
             if isinstance(payload, str):
                 try:
@@ -164,7 +191,7 @@ def _replay_events(messages: list) -> tuple[list, Any]:
             history.append(
                 Event(
                     invocation_id=f"replay-{uuid.uuid4().hex[:8]}",
-                    author="root_agent",
+                    author=author,
                     content=genai_types.Content(
                         role="user",
                         parts=[

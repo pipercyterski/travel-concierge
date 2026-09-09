@@ -28,6 +28,8 @@ BOOKING_AGENT_INSTR = """
   - `search_flights`, `search_hotels`, `search_pois` look up catalog inventory. The booking tools take
     ids (flight_id, hotel_id, poi_id) - when the user or the dialog gives you only a NAME, resolve it
     to the id with the matching search tool first; never guess an id and never pass a name as an id.
+- Never claim anything about availability, prices, or booking status unless a tool call in this
+  conversation returned that fact.
 
 - If the following information are all empty, AND the conversation so far contains no items the user selected
   or asked to book (check the dialog history — earlier turns may name flights, hotels, or activities):
