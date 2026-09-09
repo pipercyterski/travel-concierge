@@ -5,17 +5,56 @@
       "id_field": "traveler_id",
       "description": "A traveler profile on file with the concierge service.",
       "fields": [
-        {"name": "name", "type": "string"},
-        {"name": "home_airport", "type": "string", "description": "IATA code of the traveler's home airport"},
-        {"name": "home_address", "type": "string"},
-        {"name": "local_prefer_mode", "type": "string"},
-        {"name": "passport_nationality", "type": "string"},
-        {"name": "seat_preference", "type": "string"},
-        {"name": "food_preference", "type": "string"},
-        {"name": "price_sensitivity", "type": "string"},
-        {"name": "daily_budget_usd", "type": "number"},
-        {"name": "payment_methods", "type": "array", "items": {"type": "string"}},
-        {"name": "loyalty_status", "type": "string", "enum": ["none", "silver", "gold"]}
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "home_airport",
+          "type": "string",
+          "description": "IATA code of the traveler's home airport"
+        },
+        {
+          "name": "home_address",
+          "type": "string"
+        },
+        {
+          "name": "local_prefer_mode",
+          "type": "string"
+        },
+        {
+          "name": "passport_nationality",
+          "type": "string"
+        },
+        {
+          "name": "seat_preference",
+          "type": "string"
+        },
+        {
+          "name": "food_preference",
+          "type": "string"
+        },
+        {
+          "name": "price_sensitivity",
+          "type": "string"
+        },
+        {
+          "name": "daily_budget_usd",
+          "type": "number"
+        },
+        {
+          "name": "payment_methods",
+          "type": "array"
+        },
+        {
+          "name": "loyalty_status",
+          "type": "string",
+          "enum": [
+            "none",
+            "silver",
+            "gold"
+          ]
+        }
       ]
     },
     {
@@ -23,11 +62,26 @@
       "id_field": "destination_id",
       "description": "A destination in the concierge's bookable catalog, keyed by its IATA-style city code.",
       "fields": [
-        {"name": "name", "type": "string"},
-        {"name": "country", "type": "string"},
-        {"name": "airport_code", "type": "string"},
-        {"name": "summary", "type": "string"},
-        {"name": "known_for", "type": "array", "items": {"type": "string"}}
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "type": "string"
+        },
+        {
+          "name": "airport_code",
+          "type": "string"
+        },
+        {
+          "name": "summary",
+          "type": "string"
+        },
+        {
+          "name": "known_for",
+          "type": "array"
+        }
       ]
     },
     {
@@ -35,15 +89,47 @@
       "id_field": "flight_id",
       "description": "A bookable scheduled flight. seats_available lists the open seats.",
       "fields": [
-        {"name": "airline", "type": "string"},
-        {"name": "origin_airport", "type": "string"},
-        {"name": "destination_airport", "type": "string"},
-        {"name": "departure_time", "type": "string"},
-        {"name": "arrival_time", "type": "string"},
-        {"name": "boarding_time", "type": "string"},
-        {"name": "price_usd", "type": "number"},
-        {"name": "seats_available", "type": "array", "items": {"type": "string"}},
-        {"name": "status", "type": "string", "enum": ["scheduled", "delayed", "cancelled"]}
+        {
+          "name": "airline",
+          "type": "string"
+        },
+        {
+          "name": "origin_airport",
+          "type": "string"
+        },
+        {
+          "name": "destination_airport",
+          "type": "string"
+        },
+        {
+          "name": "departure_time",
+          "type": "string"
+        },
+        {
+          "name": "arrival_time",
+          "type": "string"
+        },
+        {
+          "name": "boarding_time",
+          "type": "string"
+        },
+        {
+          "name": "price_usd",
+          "type": "number"
+        },
+        {
+          "name": "seats_available",
+          "type": "array"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "enum": [
+            "scheduled",
+            "delayed",
+            "cancelled"
+          ]
+        }
       ]
     },
     {
@@ -51,12 +137,31 @@
       "id_field": "hotel_id",
       "description": "A bookable hotel at a destination.",
       "fields": [
-        {"name": "destination_id", "type": "string", "ref": "destination"},
-        {"name": "name", "type": "string"},
-        {"name": "address", "type": "string"},
-        {"name": "nightly_rate_usd", "type": "number"},
-        {"name": "room_types", "type": "array", "items": {"type": "string"}},
-        {"name": "rating", "type": "number"}
+        {
+          "name": "destination_id",
+          "type": "string",
+          "ref": "destination"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "address",
+          "type": "string"
+        },
+        {
+          "name": "nightly_rate_usd",
+          "type": "number"
+        },
+        {
+          "name": "room_types",
+          "type": "array"
+        },
+        {
+          "name": "rating",
+          "type": "number"
+        }
       ]
     },
     {
@@ -64,16 +169,52 @@
       "id_field": "poi_id",
       "description": "A point of interest or activity. open_status says whether it can currently be visited/booked.",
       "fields": [
-        {"name": "destination_id", "type": "string", "ref": "destination"},
-        {"name": "name", "type": "string"},
-        {"name": "category", "type": "string"},
-        {"name": "address", "type": "string"},
-        {"name": "latitude", "type": "string"},
-        {"name": "longitude", "type": "string"},
-        {"name": "open_status", "type": "string", "enum": ["open", "closed", "seasonal"]},
-        {"name": "booking_required", "type": "boolean"},
-        {"name": "ticket_price_usd", "type": "number"},
-        {"name": "note", "type": "string"}
+        {
+          "name": "destination_id",
+          "type": "string",
+          "ref": "destination"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "category",
+          "type": "string"
+        },
+        {
+          "name": "address",
+          "type": "string"
+        },
+        {
+          "name": "latitude",
+          "type": "string"
+        },
+        {
+          "name": "longitude",
+          "type": "string"
+        },
+        {
+          "name": "open_status",
+          "type": "string",
+          "enum": [
+            "open",
+            "closed",
+            "seasonal"
+          ]
+        },
+        {
+          "name": "booking_required",
+          "type": "boolean"
+        },
+        {
+          "name": "ticket_price_usd",
+          "type": "number"
+        },
+        {
+          "name": "note",
+          "type": "string"
+        }
       ]
     },
     {
@@ -82,13 +223,45 @@
       "description": "A reservation created by the booking flow. Starts pending_payment; process_payment confirms it.",
       "field_policy": "closed",
       "fields": [
-        {"name": "traveler_id", "type": "string", "ref": "traveler"},
-        {"name": "item_type", "type": "string", "enum": ["flight", "hotel", "activity"]},
-        {"name": "item_id", "type": "string"},
-        {"name": "description", "type": "string"},
-        {"name": "amount_usd", "type": "number"},
-        {"name": "status", "type": "string", "enum": ["pending_payment", "confirmed", "cancelled"]},
-        {"name": "date", "type": "string"}
+        {
+          "name": "traveler_id",
+          "type": "string",
+          "ref": "traveler"
+        },
+        {
+          "name": "item_type",
+          "type": "string",
+          "enum": [
+            "flight",
+            "hotel",
+            "activity"
+          ]
+        },
+        {
+          "name": "item_id",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "amount_usd",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "enum": [
+            "pending_payment",
+            "confirmed",
+            "cancelled"
+          ]
+        },
+        {
+          "name": "date",
+          "type": "string"
+        }
       ]
     },
     {
@@ -97,10 +270,27 @@
       "description": "A payment attempt against a reservation.",
       "field_policy": "closed",
       "fields": [
-        {"name": "reservation_id", "type": "string", "ref": "reservation"},
-        {"name": "method", "type": "string"},
-        {"name": "amount_usd", "type": "number"},
-        {"name": "status", "type": "string", "enum": ["completed", "declined"]}
+        {
+          "name": "reservation_id",
+          "type": "string",
+          "ref": "reservation"
+        },
+        {
+          "name": "method",
+          "type": "string"
+        },
+        {
+          "name": "amount_usd",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "enum": [
+            "completed",
+            "declined"
+          ]
+        }
       ]
     },
     {
@@ -108,10 +298,30 @@
       "id_field": "doc_id",
       "description": "An official travel-advisory document for a destination, on one topic.",
       "fields": [
-        {"name": "destination_id", "type": "string", "ref": "destination"},
-        {"name": "topic", "type": "string", "enum": ["visa", "health", "safety", "weather", "transport"]},
-        {"name": "title", "type": "string"},
-        {"name": "content", "type": "string"}
+        {
+          "name": "destination_id",
+          "type": "string",
+          "ref": "destination"
+        },
+        {
+          "name": "topic",
+          "type": "string",
+          "enum": [
+            "visa",
+            "health",
+            "safety",
+            "weather",
+            "transport"
+          ]
+        },
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "content",
+          "type": "string"
+        }
       ]
     },
     {
@@ -119,16 +329,44 @@
       "id_field": "trip_id",
       "description": "A stored trip itinerary for a traveler, following the app's Itinerary JSON shape.",
       "fields": [
-        {"name": "traveler_id", "type": "string", "ref": "traveler"},
-        {"name": "trip_name", "type": "string"},
-        {"name": "origin", "type": "string"},
-        {"name": "destination", "type": "string"},
-        {"name": "destination_id", "type": "string", "ref": "destination"},
-        {"name": "start_date", "type": "string"},
-        {"name": "end_date", "type": "string"},
-        {"name": "days", "type": "array", "items": {"type": "object"}}
+        {
+          "name": "traveler_id",
+          "type": "string",
+          "ref": "traveler"
+        },
+        {
+          "name": "trip_name",
+          "type": "string"
+        },
+        {
+          "name": "origin",
+          "type": "string"
+        },
+        {
+          "name": "destination",
+          "type": "string"
+        },
+        {
+          "name": "destination_id",
+          "type": "string",
+          "ref": "destination"
+        },
+        {
+          "name": "start_date",
+          "type": "string"
+        },
+        {
+          "name": "end_date",
+          "type": "string"
+        },
+        {
+          "name": "days",
+          "type": "array"
+        }
       ]
     }
   ],
-  "flags": {"policy": "open"}
+  "flags": {
+    "policy": "open"
+  }
 }

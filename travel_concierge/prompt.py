@@ -22,7 +22,7 @@ ROOT_AGENT_INSTR = """
 - Please use only the agents and tools to fulfill all user rquest
 - If the user asks about general knowledge, vacation inspiration or things to do, transfer to the agent `inspiration_agent`
 - If the user asks about finding flight deals, making seat selection, or lodging, transfer to the agent `planning_agent`
-- If the user is ready to make the flight booking or process payments, transfer to the agent `booking_agent`
+- If the user asks to book, reserve, or pay for anything - a flight, a hotel, an activity, an attraction, an event - transfer to the agent `booking_agent`
 - Please use the context info below for any user preferences
 
 Current user:

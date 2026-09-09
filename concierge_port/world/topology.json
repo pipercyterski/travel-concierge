@@ -2,18 +2,42 @@
   "sub_agents": [
     {
       "actor_id": "concierge",
-      "tools": ["get_traveler_profile", "get_itinerary"],
-      "talks_to": ["inspiration", "planning", "booking", "pre_trip", "in_trip", "post_trip"]
+      "tools": [
+        "get_traveler_profile",
+        "get_itinerary"
+      ],
+      "talks_to": [
+        "inspiration",
+        "planning",
+        "booking",
+        "pre_trip",
+        "in_trip",
+        "post_trip"
+      ]
     },
     {
       "actor_id": "inspiration",
-      "tools": ["list_destinations", "search_pois", "find_place"],
-      "talks_to": ["concierge", "planning"]
+      "tools": [
+        "list_destinations",
+        "search_pois",
+        "find_place"
+      ],
+      "talks_to": [
+        "concierge",
+        "planning"
+      ]
     },
     {
       "actor_id": "planning",
-      "tools": ["search_flights", "get_seat_availability", "search_hotels"],
-      "talks_to": ["concierge", "booking"]
+      "tools": [
+        "search_flights",
+        "get_seat_availability",
+        "search_hotels"
+      ],
+      "talks_to": [
+        "concierge",
+        "booking"
+      ]
     },
     {
       "actor_id": "booking",
@@ -25,32 +49,54 @@
         "get_reservations",
         "trip_expense_report"
       ],
-      "talks_to": ["concierge"]
+      "talks_to": [
+        "concierge"
+      ]
     },
     {
       "actor_id": "pre_trip",
-      "tools": ["lookup_destination_info"],
-      "talks_to": ["concierge"]
+      "tools": [
+        "lookup_destination_info"
+      ],
+      "talks_to": [
+        "concierge"
+      ]
     },
     {
       "actor_id": "in_trip",
-      "tools": [],
-      "talks_to": ["concierge", "trip_monitor"]
+      "tools": [
+        "trip_expense_report",
+        "get_reservations"
+      ],
+      "talks_to": [
+        "concierge",
+        "trip_monitor"
+      ]
     },
     {
       "actor_id": "trip_monitor",
-      "tools": ["flight_status_check", "event_booking_check", "weather_impact_check"],
-      "talks_to": ["in_trip"]
+      "tools": [
+        "flight_status_check",
+        "event_booking_check",
+        "weather_impact_check"
+      ],
+      "talks_to": [
+        "in_trip"
+      ]
     },
     {
       "actor_id": "post_trip",
       "tools": [],
-      "talks_to": ["concierge"]
+      "talks_to": [
+        "concierge"
+      ]
     }
   ],
   "topology": {
-    "entry": ["concierge"],
+    "entry": [
+      "concierge"
+    ],
     "policy": "prior",
-    "version": 1
+    "version": 2
   }
 }
