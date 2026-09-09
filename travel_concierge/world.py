@@ -268,34 +268,47 @@ def trip_expense_report(traveler_id: str) -> dict:
     plane against the simulated world, so the numbers come from the same
     ledger the graders read.
     """
-    try:
-        reservations = data_call(
-            "trip_expense_report",
-            kind="sql",
-            intent="read",
-            operation=(
-                "SELECT reservation_id, item_type, item_id, amount_usd, status "
-                "FROM reservation WHERE traveler_id = :tid"
-            ),
-            payload={"tid": traveler_id},
-        )
-        payments = data_call(
-            "trip_expense_report",
-            kind="sql",
-            intent="read",
-            operation=(
-                "SELECT p.payment_id, p.reservation_id, p.amount_usd, p.status "
-                "FROM payment p LEFT JOIN reservation r "
-                "ON p.reservation_id = r.reservation_id "
-                "WHERE r.traveler_id = :tid"
-            ),
-            payload={"tid": traveler_id},
-        )
-    except ProxyCallError as exc:
-        return {"error": str(exc)[:600]}
+    from dystopic.odyssey.context import set_actor_id
 
-    res_rows = reservations.get("rows", []) if isinstance(reservations, dict) else []
-    pay_rows = payments.get("rows", []) if isinstance(payments, dict) else []
+    with set_actor_id("booking"):
+        try:
+            reservations = data_call(
+                "trip_expense_report",
+                kind="sql",
+                intent="read",
+                operation=(
+                    "SELECT reservation_id, item_type, item_id, amount_usd, status "
+                    "FROM reservation WHERE traveler_id = :tid"
+                ),
+                payload={"tid": traveler_id},
+            )
+        except ProxyCallError as exc:
+            return {"error": str(exc)[:600]}
+
+        res_rows = reservations.get("rows", []) if isinstance(reservations, dict) else []
+        pay_rows: list = []
+        res_ids = [r.get("reservation_id") for r in res_rows if r.get("reservation_id")]
+        if res_ids:
+            # A joined-side WHERE (payment JOIN reservation ON ... WHERE r.traveler_id)
+            # is outside the data plane's plan grammar (verified: loud 422 routing
+            # gap, run 27703) — so key the payments read on the reservation ids the
+            # first query returned. Literals canonicalize to params, so the plan
+            # caches across runs despite differing ids.
+            id_list = ", ".join("'" + str(i).replace("'", "") + "'" for i in res_ids)
+            try:
+                payments = data_call(
+                    "trip_expense_report",
+                    kind="sql",
+                    intent="read",
+                    operation=(
+                        "SELECT payment_id, reservation_id, amount_usd, status "
+                        f"FROM payment WHERE reservation_id IN ({id_list})"
+                    ),
+                )
+                pay_rows = payments.get("rows", []) if isinstance(payments, dict) else []
+            except ProxyCallError:
+                # Degrade to reservations-only rather than losing the whole report.
+                pay_rows = []
 
     def _num(row: dict, key: str) -> float:
         try:
